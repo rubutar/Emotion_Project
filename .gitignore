@@ -43,3 +43,6 @@ Icon?
 .idea/
 *.swp
 *.swo
+
+# Docs
+docs/
