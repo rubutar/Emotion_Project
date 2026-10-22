@@ -30,7 +30,17 @@ struct CalendarView: View {
                 } else {
                     VStack(spacing: 12) {
                         ForEach(viewModel.entriesForSelectedDate) { entry in
-                            entryCard(entry)
+                            NavigationLink {
+                                JournalView(
+                                    viewModel: JournalViewModel(
+                                        entry: entry,
+                                        store: viewModel.store
+                                    )
+                                )
+                            } label: {
+                                entryCard(entry)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.horizontal)

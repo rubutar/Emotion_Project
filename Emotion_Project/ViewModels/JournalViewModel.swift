@@ -33,6 +33,17 @@ final class JournalViewModel {
         }
     }
 
+    init(entry: JournalEntry, store: JournalStore) {
+        self.emotion = entry.emotion
+        self.intensity = entry.intensity
+        self.store = store
+        self.prompt = PromptsRepository.random(for: entry.emotion, intensity: entry.intensity)
+        self.titleText = entry.title
+        self.entryText = entry.text
+        self.existingId = entry.id
+        self.images = entry.images.compactMap(UIImage.init(data:))
+    }
+
     func submit() {
         let entry = JournalEntry(
             id: existingId ?? UUID(),
