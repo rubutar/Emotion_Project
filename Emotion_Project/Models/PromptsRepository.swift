@@ -158,7 +158,13 @@ enum PromptsRepository {
         .angry: angry
     ]
 
-    static func random(for emotion: Emotion, intensity: Intensity) -> String {
-        data[emotion]?[intensity]?.randomElement() ?? "What's on your mind right now?"
+    static func random(
+        for emotion: Emotion,
+        intensity: Intensity,
+        excluding current: String? = nil
+    ) -> String {
+        let pool = data[emotion]?[intensity] ?? []
+        let candidates = pool.filter { $0 != current }
+        return candidates.randomElement() ?? pool.randomElement() ?? "What's on your mind right now?"
     }
 }

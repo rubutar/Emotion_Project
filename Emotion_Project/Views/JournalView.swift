@@ -1,14 +1,17 @@
 import SwiftUI
+import PhotosUI
 
 struct JournalView: View {
     @State var viewModel: JournalViewModel
     @Environment(\.dismiss) private var dismiss
+    
+
 
     var body: some View {
         ScrollView{
             HStack(spacing: 12) {
                 Spacer()
-                Image(systemName: "face.smiling")
+                Image("\(viewModel.emotion.imageName)")
                 Spacer()
                 VStack(alignment: .leading) {
                     Text("\(viewModel.emotion.title) · \(viewModel.intensity.title)").font(.headline)
@@ -18,7 +21,20 @@ struct JournalView: View {
             }
             VStack(spacing: 24) {
 
-                PromptCardView(prompt: viewModel.prompt)
+                if viewModel.isPromptVisible {
+                    PromptCardView(prompt: viewModel.prompt, tint: viewModel.emotion.color, onRefresh: { viewModel.refreshPrompt()},
+                        onHide: {
+                        viewModel.togglePrompt()
+                    }
+                    )
+                } else {
+                    Button {
+                        viewModel.togglePrompt()
+                    } label: {
+                        Label("Show the Prompt", systemImage: "chevron.down")
+                    }
+                }
+
 
                 TextEditor(text: $viewModel.entryText)
                     .frame(minHeight: 140)
@@ -27,11 +43,21 @@ struct JournalView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(Color.gray.opacity(0.3))
                     )
+//                if !viewModel.images.isEmpty {
+//                    ScrollView(.horizontal) {
+//                        HStack {
+//                            ForEach(viewModel.images.indices, id: \.self) { i in
+//                                Image(uiImage: viewModel.images[i])
+//                                    .re
+//                            
+//                        }
+//                    }
+//                }
 
+                
+                
                 Spacer()
-                Button{
-                    
-                }label: {
+                PhotosPicker(selection: $viewModel.pickerItems, maxSelectionCount: 5, matching: .images) {
                     Label("", systemImage: "camera")
                 }
             }

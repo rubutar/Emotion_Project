@@ -21,6 +21,7 @@ struct CalendarView: View {
             } else {
                 List(viewModel.entriesForSelectedDate) { entry in
                     VStack(alignment: .leading, spacing: 4) {
+                        Image(entry.emotion.imageName)
                         Text(entry.emotion.title)
                             .font(.headline)
                         Text("Intensity: \(entry.intensity.title)")
