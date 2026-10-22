@@ -15,16 +15,16 @@ enum Emotion: String, CaseIterable, Identifiable, Hashable {
     var title: String { rawValue.capitalized }
     
     var imageName: String {
-        switch self {
-        case .happy:       return "Button - Happy"
-        case .lonely:      return "Button - Lonely"
-        case .anxious:     return "Button - Anxious"
-        case .overwhelmed: return "Button - Overwhelmed"
-        case .sad:         return "Button - Sad"
-        case .drained:     return "Button - Drained"
-        case .angry:       return "Button - Angry"
+            switch self {
+            case .happy: return "Happy"
+            case .lonely: return "Lonely"
+            case .anxious: return "Anxious"
+            case .overwhelmed: return "Overwhelmed"
+            case .sad: return "Sad"
+            case .drained: return "Drained"
+            case .angry: return "Angry"
+            }
         }
-    }
     
     var color: Color {
         switch self {
